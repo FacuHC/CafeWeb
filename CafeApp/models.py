@@ -17,7 +17,7 @@ class Trabajadores(models.Model):
     email = models.EmailField()
 
 
-class pedidos(models.Model):
+class order(models.Model):
 
     nombre_cliente = models.CharField(max_length=50)    
     apellido_cliente = models.CharField(max_length=50)    

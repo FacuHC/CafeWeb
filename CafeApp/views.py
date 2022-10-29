@@ -14,6 +14,11 @@ def inicio(request):
 
 def lista_producto(request):
 
-    #lista = Producto.objects.all()
+    lista = Producto.objects.all()
 
-    return render(request, "lista_producto.html")
+    return render(request, "lista_producto.html", {"lista_productos": lista})
+
+
+def order(request):
+
+    return render(request, "order.html")

@@ -6,9 +6,9 @@
 {% block contenidoQueCambia %}
     <h1>Productos</h1>
     <ul>
-        <li>cookie</li>
-        <li>cafe</li>
-        <li>té</li>
+        {% for Producto in lista_productos %}
+        <li>{{Producto.nombre}} - {{Producto.descripcion}} - ${{Producto.precio}} </li>
+    {% endfor %}
      </ul>
 {% endblock contenidoQueCambia %}
 
