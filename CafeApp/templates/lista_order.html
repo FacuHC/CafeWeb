@@ -6,10 +6,9 @@
 {% block contenidoQueCambia %}
     <h1>Productos</h1>
     <ul>
-        {% for Producto in lista_productos %}
-        <li>{{Producto.nombre}} - {{Producto.descripcion}} - ${{Producto.precio}} </li>
+        {% for order in lista_order %}
+        <li>{{order.nombre_cliente}} - {{order.apellido_cliente}}- {{order.items_cliente}}- ${{order.precio_total}} </li>
     {% endfor %}
      </ul>
 
 {% endblock contenidoQueCambia %}
-

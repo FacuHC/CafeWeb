@@ -1,0 +1,20 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+
+     <h1>Ordene ya</h1>
+
+     <form action="{% url 'lista_order' %}" method="POST"> {% csrf_token %}
+       
+        {{formulario_ordenes.as.p}}
+
+        <input type="submit" value="Enviar"/>
+
+     </form>
+
+    
+{% endblock contenidoQueCambia %}
+
