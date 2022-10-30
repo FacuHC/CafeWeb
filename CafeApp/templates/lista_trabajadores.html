@@ -1,0 +1,15 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+    <h1>Trabajadores</h1>
+    <ul>
+        {% for trabajadores in lista_trabajadores %}
+        <table> <b> Nombre: </b> {{trabajadores.nombre}} - <b>Apellido: </b> {{trabajadores.apellido}} -  <b>Email: </b>: {{trabajadores.email}} </table>
+    {% endfor %}
+     </ul>
+
+{% endblock contenidoQueCambia %}
+

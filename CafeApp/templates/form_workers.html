@@ -5,11 +5,11 @@
 
 {% block contenidoQueCambia %}
 
-     <h1>Ordene ya</h1>
+     <h1>Agrega Trabajadores</h1>
 
-     <form action="{% url 'ordenar' %}" method="POST"> {% csrf_token %}
+     <form action="{% url 'TrabajadoresFormulario' %}" method="POST"> {% csrf_token %}
        
-        {{formulario_ordenes.as_p}}
+        {{formulario_workers.as_p}}
 
         <input type="submit" value="Enviar"/>
 
@@ -17,4 +17,3 @@
 
     
 {% endblock contenidoQueCambia %}
-

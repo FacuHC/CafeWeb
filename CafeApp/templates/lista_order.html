@@ -4,10 +4,10 @@
 
 
 {% block contenidoQueCambia %}
-    <h1>Productos</h1>
+    <h1>Ordenes </h1>
     <ul>
         {% for order in lista_order %}
-        <li>{{order.nombre_cliente}} - {{order.apellido_cliente}}- {{order.items_cliente}}- ${{order.precio_total}} </li>
+        <li><b>Nombre: </b>{{order.nombre_cliente}} - <b>Apellido: </b> {{order.apellido_cliente}}- <b>Comanda: </b> {{order.items_cliente}}- <b>Precio: $</b>{{order.precio_total}} - <b>ENVIADA</b>: <input type="checkbox"> </li>
     {% endfor %}
      </ul>
 
