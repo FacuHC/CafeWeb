@@ -1,0 +1,17 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+
+
+<p>Info del producto :</p>
+
+
+<li><b>Nombre: </b> {{producto.nombre}}</li>
+<li><b>Descripcion: </b>{{producto.descripcion}}</li>
+<li><b>Precio $: </b>{{producto.precio}}</li>
+
+{% endblock contenidoQueCambia %}
+

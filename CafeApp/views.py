@@ -91,7 +91,7 @@ def TrabajadoresForm(request):
 
 #---------------BUSCADORES------------#
 
-
+#----------B-ORDENES-----------#
 def busqueda_order(request):
 
 
@@ -106,5 +106,31 @@ def buscar_order(request):
 
    return render(request, "resultado_busqueda_order.html", {"Order": Order})
 
+#----------B-TRABAJADORES-----------#
+
+def busqueda_trabajador(request):
+    return render(request, "busqueda_trabajador.html")
 
 
+def buscar_trabajador(request):
+    
+   Buscar_nombre_trabajador = request.GET["nombre"]
+
+   trabajador = Trabajadores.objects.get(nombre = Buscar_nombre_trabajador)
+
+   return render(request, "resultado_busqueda_trabajador.html", {"trabajador": trabajador})
+
+#----------B-PRODUCTOS-----------#
+
+
+def busqueda_producto(request):
+    return render(request, "busqueda_producto.html")
+
+
+def buscar_producto(request):
+    
+   Buscar_nombre_producto = request.GET["nombre"]
+
+   producto = Producto.objects.get(nombre = Buscar_nombre_producto)
+
+   return render(request, "resultado_busqueda_producto.html", {"producto": producto})
