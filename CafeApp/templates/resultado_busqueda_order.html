@@ -1,0 +1,20 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+
+
+<p>La oren es:</p>
+
+
+<li><b>Nombre: </b> {{Order.nombre_cliente}}</li>
+<li><b>Apellido: </b>{{Order.apellido_cliente}}</li>
+<li><b>email: </b>{{Order.email_cliente}}</li>
+<li><b>Items: </b>{{Order.items_cliente}}</li>
+<li><b>Precio: $</b>{{Order.precio_total}}</li>
+
+    
+{% endblock contenidoQueCambia %}
+

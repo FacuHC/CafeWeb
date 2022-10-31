@@ -11,7 +11,7 @@ def inicio(request):
 
     return render(request, "inicio.html")
    
-#---------------PRODUCTOS------------
+#---------------PRODUCTOS------------#
 
 
 def lista_producto(request):
@@ -33,7 +33,7 @@ def form_productos(request):
 
     return render(request, "form_productos.html")
 
-#---------------ORDENES------------
+#---------------ORDENES------------#
 
 
 def lista_order(request):
@@ -61,7 +61,7 @@ def ordenarForm(request):
     return render(request, "form_ordens.html", {"formulario_ordenes": formulario_ordenes})
 
 
-#---------------TRABAJADORES------------
+#---------------TRABAJADORES------------#
 
 
 def lista_trabajadores(request):
@@ -81,8 +81,30 @@ def TrabajadoresForm(request):
             data = formulario_workers.cleaned_data
             listaDeTrabajadores = Trabajadores(nombre = data["nombre"], apellido = data["apellido"],email = data["email"])
             listaDeTrabajadores.save()
+         
         
     else:
         formulario_workers = TrabajadoresFormulario()
     
     return render(request, "form_workers.html", {"formulario_workers": formulario_workers})
+
+
+#---------------BUSCADORES------------#
+
+
+def busqueda_order(request):
+
+
+    return render(request, "busqueda_order.html")
+
+
+def buscar_order(request):
+    
+   Buscar_nombre_cliente = request.GET["nombre_cliente"]
+
+   Order = order.objects.get(nombre_cliente = Buscar_nombre_cliente)
+
+   return render(request, "resultado_busqueda_order.html", {"Order": Order})
+
+
+

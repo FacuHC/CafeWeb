@@ -24,11 +24,12 @@
         <nav id="asdas" class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="navbar-brand1" href="#!">Inicio</a>
-                <a class="navbar-brand" href="{% url 'producto' %}">Productos</a>
-                <a class="navbar-brand" href="{% url 'ordenar' %}">ordenar</a>
+                <a class="navbar-brand" href="{% url 'producto' %}"> <b>Productos</b></a>
+                <a class="navbar-brand" href="{% url 'lista_order' %}"><b>Ordenes</b></a>
+                <a class="navbar-brand" href="{% url 'trabajadores' %}"><b>Trabajadores</b></a>
                 <a class="navbar-brand" href="{% url 'form_productos'%}">Agregar Productos</a>
-                <a class="navbar-brand" href="{% url 'lista_order' %}">Ordenes</a>
-                <a class="navbar-brand" href="{% url 'trabajadores' %}">trabajadores</a>
+                <a class="navbar-brand" href="{% url 'ordenar' %}">Ordenar</a>
+                <a class="navbar-brand" href="{% url 'TrabajadoresFormulario' %}">Agregar trabajadores</a>
                 <a class="btn btn-primary" href="#signup">Iniciar</a>
             </div>
         </nav>
