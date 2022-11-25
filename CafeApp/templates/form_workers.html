@@ -5,9 +5,9 @@
 
 {% block contenidoQueCambia %}
 
-     <h1>Agrega Trabajadores</h1>
+     <h1 style="color: rgb(232, 230, 230);" >Agrega Trabajadores</h1>
 
-     <form action="{% url 'TrabajadoresFormulario' %}" method="POST"> {% csrf_token %}
+     <form style="color: rgb(232, 230, 230);"  action="{% url 'TrabajadoresFormulario' %}" method="POST"> {% csrf_token %}
        
         {{formulario_workers.as_p}}
 

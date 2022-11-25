@@ -5,10 +5,10 @@
 
 {% block contenidoQueCambia %}
 
-<h3>Busqueda de Productos</h3>
+<h3 style="color: rgb(232, 230, 230);">Busqueda de Productos</h3>
 
 
-     <form action="{% url 'buscar_producto' %}" method="GET"> {% csrf_token %}
+     <form style="color: rgb(232, 230, 230);" action="{% url 'buscar_producto' %}" method="GET"> {% csrf_token %}
        
         <p>Ingrese nombre del producto -> <input type="text" name = "nombre"></p>
         

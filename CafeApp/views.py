@@ -1,16 +1,38 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Producto, order, Trabajadores
-from .forms import TrabajadoresFormulario, ordenarFormulario
+from django.dispatch import receiver
+from django.views.generic import ListView
+from django.views.generic.edit import DeleteView, UpdateView, CreateView
+from django.views.generic.detail import DetailView
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.decorators  import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models.signals import post_save
+
+
+from .models import Producto, order, Trabajadores, Avatar
+from .forms import TrabajadoresFormulario, ordenarFormulario, ProductosFormulario, UserEditForm,  UserRegisterForm, avatarupload
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 
 def inicio(request):
+    
+    # avatar = Avatar.objects.get(user=request.user)
 
-    return render(request, "inicio.html")
-   
+    return render(request, "inicio.html",)
+    # {"url": avatar.imagen.url
+
+
+
+def store(request):
+    return render(request, "store.html")
+
 #---------------PRODUCTOS------------#
 
 
@@ -24,18 +46,26 @@ def lista_producto(request):
 
 def form_productos(request):
 
-    if request.method == "POST":
-
-        lista_producto = Producto(nombre=request.POST["nombre"], descripcion=request.POST["descripcion"],precio=request.POST["precio"] )
-        lista_producto.save()
-
+    if request.method == 'POST':
+        formulario_producto = ProductosFormulario(request.POST)
+        if formulario_producto.is_valid():
+            data = formulario_producto.cleaned_data
+            listadeproducto = Producto(nombre=data["nombre"], descripcion=data["descripcion"], precio=data["precio"])         
+            listadeproducto.save()
+            
+            
+        
+    else:
+        formulario_producto = ProductosFormulario()
     
+    return render(request, "form_productos.html", {"formulario_producto": formulario_producto})
 
-    return render(request, "form_productos.html")
+
+        
 
 #---------------ORDENES------------#
 
-
+@staff_member_required(login_url="Login")
 def lista_order(request):
 
     lista = order.objects.all()
@@ -53,7 +83,6 @@ def ordenarForm(request):
             data = formulario_ordenes.cleaned_data
             lista_order = order(nombre_cliente=data["nombre_cliente"], apellido_cliente=data["apellido_cliente"],email_cliente=data["email_cliente"],items_cliente =data["items_cliente"],precio_total =data["precio_total"])          
             lista_order.save()
-            return redirect("lista_order")
         
     else:
         formulario_ordenes = ordenarFormulario()
@@ -63,7 +92,7 @@ def ordenarForm(request):
 
 #---------------TRABAJADORES------------#
 
-
+@login_required
 def lista_trabajadores(request):
 
     listaDeTrabajadores = Trabajadores.objects.all()
@@ -72,7 +101,7 @@ def lista_trabajadores(request):
 
 
 
-
+@login_required
 def TrabajadoresForm(request):
    
     if request.method == "POST":
@@ -129,8 +158,271 @@ def busqueda_producto(request):
 
 def buscar_producto(request):
     
-   Buscar_nombre_producto = request.GET["nombre"]
+    if request.GET["nombre"]:
+         Buscar_nombre_producto = request.GET["nombre"]
+         producto = Producto.objects.get(nombre = Buscar_nombre_producto)
+         
+       
+         return render(request, "resultado_busqueda_producto.html", {"producto": producto})
+    
+    else:
+        
+        respuesta = "No hay informaicon para esa busqueda"
 
-   producto = Producto.objects.get(nombre = Buscar_nombre_producto)
+        return render(request, "busqueda_producto.html", {"respuesta": respuesta})
 
-   return render(request, "resultado_busqueda_producto.html", {"producto": producto})
+
+
+#----------ELIMINAR-----------#
+
+
+def eliminar_producto(request, id):
+    
+    if request.method == "POST":
+
+        producto = Producto.objects.get(id=id)
+        producto.delete()
+        lista = Producto.objects.all()
+
+        return render(request, "lista_producto.html", {"lista_productos": lista}) 
+
+
+def eliminar_order(request, id):
+    
+    if request.method == "POST":
+
+        orden1 = order.objects.get(id=id)
+        orden1.delete()
+        lista = order.objects.all()
+
+        return render(request, "lista_order.html", {"lista_order": lista}) 
+
+
+def eliminar_trabajador(request, id):
+    
+    if request.method == "POST":
+
+        trabajador = Trabajadores.objects.get(id=id)
+        trabajador.delete()
+        lista = Trabajadores.objects.all()
+
+        return render(request, "lista_trabajadores.html", {"lista_trabajadores": lista}) 
+
+
+
+
+#----------EDICION-----------#
+
+
+def editar_prducto(request, id):
+
+    producto = Producto.objects.get(id=id)
+
+    if request.method == 'POST':
+        formulario_producto = ProductosFormulario(request.POST)
+        if formulario_producto.is_valid():
+      
+            data = formulario_producto.cleaned_data
+      
+            producto.nombre=data["nombre"]
+            producto.descripcion=data["descripcion"]
+            producto.precio=data["precio"]
+            producto.imagen=data["imagen"]
+
+            producto.save()
+
+            return HttpResponseRedirect("/producto/")
+            
+        
+    else:
+
+        formulario_producto = ProductosFormulario(initial={
+            "nombre":producto.nombre,
+            "descripcion":producto.descripcion,
+            "precio":producto.precio,
+            "imagen":producto.imagen
+        })
+    
+    return render(request, "editar_producto.html", {"formulario_producto": formulario_producto, "id": producto.id})
+
+
+
+def editar_trabajador(request, id):
+
+    trabajador = Trabajadores.objects.get(id=id)
+
+    if request.method == 'POST':
+        formulario_workers = TrabajadoresFormulario(request.POST)
+        if formulario_workers.is_valid():
+      
+            data = formulario_workers.cleaned_data
+      
+            trabajador.nombre=data["nombre"]
+            trabajador.apellido=data["apellido"]
+            trabajador.email=data["email"]    
+      
+            trabajador.save()
+
+            return HttpResponseRedirect("/trabajadores/")
+            
+        
+    else:
+
+        formulario_workers = TrabajadoresFormulario(initial={
+            "nombre":trabajador.nombre,
+            "apellido":trabajador.apellido,
+            "email":trabajador.email
+        })
+    
+    return render(request, "editar_trabajador.html", {"formulario_workers": formulario_workers, "id": trabajador.id})
+
+
+
+# class ProductoList(LoginRequiredMixin,ListView):
+
+#     model = Producto
+#     template_name = "producto_list.html"
+#     context_object_name =  "ProductosList1"
+
+
+class ProductosDetail(DetailView):
+
+    model = Producto
+    template_name = "producto_detail.html"
+    context_object_name =  "Producto"
+    
+
+# class ProductoCreate(CreateView):
+
+#     model = Producto
+#     template_name = "producto_create.html"
+#     fields = ["nombre", "descripcion", "precio"]
+#     success_url = "ProductoList"
+
+# class ProductosUpdate(UpdateView):
+
+#     model = Producto
+#     template_name = "producto_update.html"
+#     fields = ("__all__")
+#     success_url = "Producto"
+
+
+# class ProductosDelete(DeleteView):
+
+#     model = Producto
+#     template_name = "producto_delete.html"
+#     success_url = "/producto/"
+
+
+def loginView(request):
+   
+    if request.method == "POST":
+        form1 = AuthenticationForm(request, data=request.POST)
+        if form1.is_valid():
+        
+            data = form1.cleaned_data
+          
+            usuario = data["username"]
+            psw = data["password"]
+
+            user = authenticate(username = usuario, password = psw) 
+           
+            if user:
+
+                login(request, user)
+                
+                return render(request, "inicio.html", {"mensaje": f'Bienvendio {usuario}'})
+
+            else:
+            
+             return render(request, "inicio.html", {"mensaje": f'Error datos incorrectos'})
+       
+        return render(request, "inicio.html", {"mensaje": f'Error, formulario invalido'})
+        
+    else:
+        form1 = AuthenticationForm()
+    
+    return render(request, "login.html", {"form1": form1})
+
+def register(request):
+
+
+    if request.method == 'POST':
+      
+        form1 = UserRegisterForm(request.POST)
+       
+        if form1.is_valid():
+      
+            username = form1.cleaned_data["username"]
+
+            form1.save()
+
+            return render(request, "inicio.html", {"mensaje": f"Usuario{username} creado con existo"})
+      
+        else:
+
+            return render(request, "inicio.html", {"mensaje": f"Error en la crecion"})
+
+        
+    else:
+
+        form1 = UserRegisterForm()
+    
+        return render(request, "registro.html", {"form1": form1})
+
+
+
+def editar_perfil(request):
+    
+    usuario = request.user
+
+    if request.method == 'POST':
+        form1 = UserEditForm(request.POST)
+        if form1.is_valid():
+      
+            data = form1.cleaned_data
+      
+            usuario.first_name=data["first_name"]
+            usuario.last_name=data["last_name"]
+            usuario.email=data["email"]    
+            # usuario.set_avatar(data["avatar"])
+            usuario.set_password(data["password1"])
+      
+            usuario.save()
+
+            return render(request, "editar_perfil.html", {"mensaje": f"Datos actualizados"})
+
+        # return render(request,"editar_perfil.html", {"mensaje": f"Contraseñas no coninciden"} )
+
+    else:
+
+        form1 = UserEditForm(instance=request.user)
+    
+    return render(request, "editar_perfil.html", {"form1": form1})
+
+@login_required
+def changeAvatar(request):
+     
+     
+    usuario = request.user
+
+    if request.method == 'POST':
+        form1 = avatarupload(request.POST)
+        if form1.is_valid():
+      
+            data = form1.cleaned_data
+      
+            usuario.imagen=data["imagen"]
+          
+            usuario.save()
+
+            return render(request, "avatarUL.html", {"mensaje": f"foto actualizados"})
+
+        # return render(request,"editar_perfil.html", {"mensaje": f"Contraseñas no coninciden"} )
+
+    else:
+
+        form1 = avatarupload(instance=request.user)
+    
+    return render(request, "avatarUL.html", {"form1": form1})
+

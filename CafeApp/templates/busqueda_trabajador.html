@@ -5,9 +5,9 @@
 
 {% block contenidoQueCambia %}
 
-     <h1>Buscar trabjador</h1>
+     <h1 style="color: rgb(232, 230, 230);">Buscar trabjador</h1>
 
-     <form action="{% url 'buscar_trabajador' %}" method="GET"> {% csrf_token %}
+     <form style="color: rgb(232, 230, 230);" action="{% url 'buscar_trabajador' %}" method="GET"> {% csrf_token %}
        
         <p>Ingrese nombre del trabajador -> <input type="text" name = "nombre"></p>
         

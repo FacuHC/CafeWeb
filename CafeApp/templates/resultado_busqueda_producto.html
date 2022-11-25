@@ -2,16 +2,26 @@
 
 {% load static %}
 
-
 {% block contenidoQueCambia %}
 
 
-<p>Info del producto :</p>
+{% if producto %}
+    
+
+<p style="color: rgb(232, 230, 230);">Info del producto {{producto.nombre}}:</p>
 
 
-<li><b>Nombre: </b> {{producto.nombre}}</li>
-<li><b>Descripcion: </b>{{producto.descripcion}}</li>
-<li><b>Precio $: </b>{{producto.precio}}</li>
+<li style="color: rgb(232, 230, 230);"><b>Nombre: </b> {{producto.nombre}}</li>
+<li style="color: rgb(232, 230, 230);"><b>Descripcion: </b>{{producto.descripcion}}</li>
+<li style="color: rgb(232, 230, 230);"><b>Precio $: </b>{{producto.precio}}</li>
+
+{% else %}
+
+<p>No hay data</p>
+
+{% endif %}
+
+<p style="color:red ;">{{respuesta}}</p>
 
 {% endblock contenidoQueCambia %}
 

@@ -1,0 +1,20 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+<center>
+     <h1 style="color: rgb(206, 206, 206);">   <i> <u> Inice Sesion </u></i></h1></h1>
+
+     <form style="color: rgb(255, 255, 255);" action="{% url 'Login' %}" method="POST"> {% csrf_token %}
+       
+        {{form1.as_p}}
+
+        <input type="submit" value="Iniciar Sesión"/>
+
+     </form>
+   </center>
+    
+{% endblock contenidoQueCambia %}
+

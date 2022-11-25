@@ -1,0 +1,30 @@
+<title>Productos - CafeCoder</title>
+
+
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+    <center style="color: rgb(189, 184, 184);">  <h1> <i> <u> Productos </u></i></h1> </center>
+    <center>
+    <ul style="color: rgb(255, 255, 255);">
+       
+     {% for Producto in ProductosList1 %}
+        <a href="{% url 'DetallesProductos' Producto.id%}">
+     <table>{{Producto.nombre}} - {{Producto.descripcion}} - ${{Producto.precio}} 
+     </a>
+        </table>
+    
+<div>
+    <button>
+        <a href="{% url 'EliminaProducto' Producto.id %}"> Eliminar</a>
+    </button>
+    <button> <a href="{% url 'ActualizaProductos' Producto.id%}"> Editar</a></button>
+</div>
+
+    {% endfor %}
+     </ul>
+    </center>
+{% endblock contenidoQueCambia %}

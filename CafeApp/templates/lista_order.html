@@ -7,11 +7,20 @@
 
 
 {% block contenidoQueCambia %}
-    <h1>Ordenes </h1>
-    <ul>
+<center style="color: rgb(189, 184, 184);">  <h1> <i> <u> Ordenes </u></i></h1> </center>
+<ul style="color: rgb(255, 255, 255);">
         {% for order in lista_order %}
-        <li><b>Nombre: </b>{{order.nombre_cliente}} - <b>Apellido: </b> {{order.apellido_cliente}}- <b>Comanda: </b> {{order.items_cliente}}- <b>Precio: $</b>{{order.precio_total}} - <b>ENVIADA</b>: <input type="checkbox"> </li>
-    {% endfor %}
+        <li><b>Nombre: </b>{{order.nombre_cliente}} - <b>Apellido: </b> {{order.apellido_cliente}}- <b>Comanda: </b> {{order.items_cliente}}- <b>Precio: $</b>{{order.precio_total}}  </li>  
+        <div>
+            <form style="color: rgb(232, 230, 230);"  action="{% url 'EliminarOrden' order.id %}" method="POST"> {% csrf_token %}
+
+                <button> Eliminar </button>
+    
+             </form>
+        </div>
+
+
+        {% endfor %}
      </ul>
 
 {% endblock contenidoQueCambia %}

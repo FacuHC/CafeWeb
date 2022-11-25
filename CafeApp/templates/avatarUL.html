@@ -1,0 +1,24 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+<center>
+     <h1 style="color: rgb(206, 206, 206);">   <i> <u> Edicion de Perfil </u></i></h1></h1>
+
+
+
+     <form style="color: rgb(255, 255, 255);"  method="POST" action="" enctype="multipart/form-data"> {% csrf_token %}
+       
+        {{form1.as_p}}
+
+        <!-- {{mensaje}} -->
+
+        <input type="submit" value="Actualizar"/>
+
+     </form>
+   </center>
+    
+{% endblock contenidoQueCambia %}
+

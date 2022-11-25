@@ -1,0 +1,18 @@
+<title>Productos - CafeCoder</title>
+
+
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+    <center style="color: rgb(189, 184, 184);">  <h1> <i> <u> Producto</u></i></h1> </center>
+    <center>
+    <ul style="color: rgb(255, 255, 255);">
+        <h3>{{Producto.nombre}} - descripcion: {{Producto.descripcion}} ${{Producto.precio}} </h3>
+       <img src="{{url}}" alt="items"> 
+     </ul>
+    </center>
+{% endblock contenidoQueCambia %}
+

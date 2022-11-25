@@ -7,12 +7,28 @@
 
 
 {% block contenidoQueCambia %}
-    <h1>Trabajadores</h1>
-    <ul>
+    <center> <h1 style="color: grey;">Trabajadores</h1></center>
+    <center>
+    <ul style="color: rgb(255, 255, 255);">
         {% for trabajadores in lista_trabajadores %}
-        <table> <b> Nombre: </b> {{trabajadores.nombre}} - <b>Apellido: </b> {{trabajadores.apellido}} -  <b>Email: </b>: {{trabajadores.email}} </table>
-    {% endfor %}
-     </ul>
+        <table> <b> Nombre: </b> {{trabajadores.nombre}} - <b>Apellido: </b> {{trabajadores.apellido}} -  <b>Email: </b>: {{trabajadores.email}}
+      
+            <form style="color: rgb(232, 230, 230);"  action="{% url 'eliminar_trabajador' trabajadores.id %}" method="POST"> {% csrf_token %}
 
+                <button> Eliminar </button>
+    
+             </form>
+            </table>
+        
+        <div>
+            <button>
+                <a href="{% url 'editar_trabajador' trabajadores.id %}" > Editar</a>
+            </button>
+        </div>
+
+    
+        {% endfor %}
+     </ul>
+    </center>
 {% endblock contenidoQueCambia %}
 

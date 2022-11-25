@@ -1,0 +1,20 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+<center>
+     <h1 style="color: rgb(206, 206, 206);">   <i> <u> Edicion de trabajdor </u></i></h1></h1>
+
+     <form style="color: rgb(255, 255, 255);" action="{% url 'editar_trabajador' id %}" method="POST"> {% csrf_token %}
+       
+        {{formulario_workers.as_p}}
+
+        <input type="submit" value="Actualizar"/>
+
+     </form>
+   </center>
+    
+{% endblock contenidoQueCambia %}
+

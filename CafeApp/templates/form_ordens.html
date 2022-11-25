@@ -4,17 +4,17 @@
 
 
 {% block contenidoQueCambia %}
+<center>
+     <h1 style="color: rgb(206, 206, 206);">   <i> <u> Ordene Ya! </u></i></h1></h1>
 
-     <h1>Ordene ya</h1>
-
-     <form action="{% url 'ordenar' %}" method="POST"> {% csrf_token %}
+     <form style="color: rgb(255, 255, 255);" action="{% url 'ordenar' %}" method="POST"> {% csrf_token %}
        
         {{formulario_ordenes.as_p}}
 
         <input type="submit" value="Enviar"/>
 
      </form>
-
+   </center>
     
 {% endblock contenidoQueCambia %}
 
