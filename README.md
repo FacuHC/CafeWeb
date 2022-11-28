@@ -1,20 +1,28 @@
 coder# CafeWeb
 
+link video YT = https://youtu.be/CQWKMAzCmxM
+
+Pagina creada por Facundo Hernández Cibelli
+
 Esta pagina trata de recrear una pagina de venta de cafe y aldeaños.
 
-La pagina consta de tres models: Productos, Trabajadores, Order.
-En productos va las items que se vendrian, en trabajadores la lista de los mismos, y en order los pedidos a realizar.
+La web tiene varios models y funcionamientos.
 
-En el navbar-brand de la pagina los primeros tres links en negrita  tenemos la lista de cada uno de los models y en los siguientes tres  tenemos los
-formularios para agregar a cada uno de los models.
+Todo se puede acceder desde el NavBar, si tiene un usario comun osea no un superusario se veran cuatro botones o links
+Incio = enviara al url vacio que es el inicio de la pagina
+Productos = a una lista de todos nuestros poductos en la base de datos
+Tienda = a un carrito donde se pueden agregar y limpiar productos pero no hacer la orden
+Acerca de nostros  = una descripcion de como surgio la idea.
+--
 
-Ademas tenemos tres urls para hacer busquedas en la base de datos estos son:
-/busqueda_trabajador -> Para buscar un trabajador, ademas enviara al url /buscar_trabajador
-/Busqueda_order -> Para buscar un pedido, ademas enviara al url /buscar_order
-/busqueda_producto -> Para buscar productos, ademas enviara al url /buscar_producto
+luego si tenemos un super usario como "Coder"
+tenemos dos botones mas donnde hay una administraion con varios links desde agregar y editar roductos hasta trabajadores
+y un ultimo boton de COMANDAS donde tenemos la lista de comandas acualtes y agregar mas
 
 
 SuperUsuario:
 usuario: Coder 
 email: coder@coder.com
 pass: 123
+
+

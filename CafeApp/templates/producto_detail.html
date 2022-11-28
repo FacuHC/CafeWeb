@@ -10,9 +10,17 @@
     <center style="color: rgb(189, 184, 184);">  <h1> <i> <u> Producto</u></i></h1> </center>
     <center>
     <ul style="color: rgb(255, 255, 255);">
-        <h3>{{Producto.nombre}} - descripcion: {{Producto.descripcion}} ${{Producto.precio}} </h3>
-       <img src="{{url}}" alt="items"> 
+        <h1>{{Producto.nombre}} </h1>
+            <h3>Descripcion: {{Producto.descripcion}}</h3>
+            <h3>Precio: ${{Producto.precio}} </h3>  
+            
+            <img src="{{ Producto.imagen.url }}" width="600" height="600">
+
      </ul>
     </center>
+<div>
+
+</div>
+
 {% endblock contenidoQueCambia %}
 

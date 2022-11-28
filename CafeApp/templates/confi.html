@@ -1,0 +1,31 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoQueCambia %}
+
+<div id="toc_container">
+    <h1 class="toc_title" style="color: snow;">Configuración</h1>
+    <ul class="toc_list">
+      <li><a href="{% url 'producto' %}">1 Lista y edicion de Productos</a>
+      <ul>
+        <li><a href="{% url 'form_productos' %}">1.1 Agregar un Producto</a></li>
+        <li><a href="{% url 'busqueda_producto' %}">1.2 Buscar un producto</a></li>
+      </ul>
+    </li>
+    <li><a href="{% url 'trabajadores' %}">1 Lista y edicion de Trabajadores</a>
+        <ul>
+       <li> <a href="{% url 'TrabajadoresFormulario' %}"> 1.1 Agregar un Trabajador</li></a>
+       <li><a href="{% url 'busqueda_trabajador' %}">1.2Buscar Trabajador</a></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'list,comanda' %}"> Comandas </a></li>
+        </ul>
+    
+    </ul>
+    </div>
+
+    
+{% endblock contenidoQueCambia %}
+

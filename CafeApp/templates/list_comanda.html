@@ -1,0 +1,37 @@
+<title>Ordenes - CafeCoder</title>
+
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+
+{% block contenidoQueCambia %}
+<center style="color: rgb(189, 184, 184);">  <h1> <i> <u> COMANDAS </u></i></h1> </center>
+<ul style="color: rgb(255, 255, 255);">
+        {% for comanda  in list_comanda %}
+        <li><b>Nombre: </b>{{comanda.nombre_cliente}} -  <b>Comanda: </b> {{comanda.items_cliente}}- <b>N° Mesa: </b> {{comanda.mesa}} -<b>Precio: $</b>{{comanda.precio_total}}  </li>  
+        <div>
+        <input type="checkbox">  lista
+    </div>
+        <div>
+            <form style="color: rgb(232, 230, 230);"  action="{% url 'eliminar_comanda' comanda.id %}" method="POST"> {% csrf_token %}
+
+            
+                {% if request.user.is_superuser %}
+                                
+                <button> Eliminar </button>
+                {% endif %}
+            </tr>  
+        </div>
+
+
+        {% endfor %}
+  
+    <div style="text-align: right;" > <center>
+        <button><a href="{% url 'form_comanda' %}"> Agregar nueva comanda</a></button> </center>
+    </div>
+    </ul>
+
+{% endblock contenidoQueCambia %}
+

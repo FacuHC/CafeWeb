@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Producto, Avatar
+from .models import Producto, Avatar, comanda
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib.auth.models import User
 
@@ -9,8 +9,7 @@ class ordenarFormulario(forms.Form):
     nombre_cliente = forms.CharField(max_length=50)    
     apellido_cliente = forms.CharField(max_length=50)    
     email_cliente = forms.EmailField()
-    items_cliente = forms.CharField(max_length=100)
-    precio_total = forms.IntegerField()
+    
 
 
 class TrabajadoresFormulario(forms.Form):
@@ -20,11 +19,11 @@ class TrabajadoresFormulario(forms.Form):
     email = forms.EmailField()
 
 
-# class ProductosFormulario(forms.Form):
+class ComandaFormulario(forms.ModelForm):
     
-#     nombre = forms.CharField(max_length=50)    
-#     descripcion = forms.CharField(max_length=50)    
-#     precio  = forms.IntegerField() 
+    class Meta:
+        model = comanda 
+        fields = ("__all__")
 
 
 class ProductosFormulario(forms.ModelForm):

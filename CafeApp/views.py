@@ -12,10 +12,10 @@ from django.contrib.auth.decorators  import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models.signals import post_save
+from Cart.context_processor import total_total
 
-
-from .models import Producto, order, Trabajadores, Avatar
-from .forms import TrabajadoresFormulario, ordenarFormulario, ProductosFormulario, UserEditForm,  UserRegisterForm, avatarupload
+from .models import Producto, Trabajadores, Avatar, order, comanda
+from .forms import TrabajadoresFormulario, ordenarFormulario, ProductosFormulario, UserEditForm,  UserRegisterForm, avatarupload, ComandaFormulario
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -23,15 +23,11 @@ from django.contrib.auth.models import User
 
 def inicio(request):
     
-    # avatar = Avatar.objects.get(user=request.user)
 
     return render(request, "inicio.html",)
-    # {"url": avatar.imagen.url
+ 
 
 
-
-def store(request):
-    return render(request, "store.html")
 
 #---------------PRODUCTOS------------#
 
@@ -81,13 +77,51 @@ def ordenarForm(request):
         print(formulario_ordenes)
         if formulario_ordenes.is_valid():
             data = formulario_ordenes.cleaned_data
-            lista_order = order(nombre_cliente=data["nombre_cliente"], apellido_cliente=data["apellido_cliente"],email_cliente=data["email_cliente"],items_cliente =data["items_cliente"],precio_total =data["precio_total"])          
+            lista_order = order(nombre_cliente=data["nombre_cliente"], apellido_cliente=data["apellido_cliente"],email_cliente=data["email_cliente"])          
+            
             lista_order.save()
         
     else:
         formulario_ordenes = ordenarFormulario()
     
     return render(request, "form_ordens.html", {"formulario_ordenes": formulario_ordenes})
+
+
+
+#-----------comanda-----------#
+
+def list_comanda(request):
+
+    lista = comanda.objects.all()
+
+
+    return render(request, "list_comanda.html", {"list_comanda": lista})
+
+def form_comanda(request):
+
+    if request.method == 'POST':
+        formulario_producto = ComandaFormulario(request.POST)
+        if formulario_producto.is_valid():
+            data = formulario_producto.cleaned_data
+            listadeproducto = comanda(nombre_cliente=data["nombre_cliente"], mesa=data["mesa"], items_cliente=data["items_cliente"], precio_total=data["precio_total"])         
+            listadeproducto.save()
+            return redirect("list,comanda")
+        
+    else:
+        formulario_producto = ComandaFormulario()
+    
+    return render(request, "form_comanda.html", {"formulario_producto": formulario_producto})
+
+def eliminar_comanda(request, id):
+    
+    if request.method == "POST":
+
+        producto = comanda.objects.get(id=id)
+        producto.delete()
+        lista = comanda.objects.all()
+
+        return render(request, "list_comanda.html", {"list_comanda": lista}) 
+
 
 
 #---------------TRABAJADORES------------#
@@ -134,6 +168,8 @@ def buscar_order(request):
    Order = order.objects.get(nombre_cliente = Buscar_nombre_cliente)
 
    return render(request, "resultado_busqueda_order.html", {"Order": Order})
+
+   
 
 #----------B-TRABAJADORES-----------#
 
@@ -278,12 +314,6 @@ def editar_trabajador(request, id):
 
 
 
-# class ProductoList(LoginRequiredMixin,ListView):
-
-#     model = Producto
-#     template_name = "producto_list.html"
-#     context_object_name =  "ProductosList1"
-
 
 class ProductosDetail(DetailView):
 
@@ -292,26 +322,7 @@ class ProductosDetail(DetailView):
     context_object_name =  "Producto"
     
 
-# class ProductoCreate(CreateView):
 
-#     model = Producto
-#     template_name = "producto_create.html"
-#     fields = ["nombre", "descripcion", "precio"]
-#     success_url = "ProductoList"
-
-# class ProductosUpdate(UpdateView):
-
-#     model = Producto
-#     template_name = "producto_update.html"
-#     fields = ("__all__")
-#     success_url = "Producto"
-
-
-# class ProductosDelete(DeleteView):
-
-#     model = Producto
-#     template_name = "producto_delete.html"
-#     success_url = "/producto/"
 
 
 def loginView(request):
@@ -418,7 +429,6 @@ def changeAvatar(request):
 
             return render(request, "avatarUL.html", {"mensaje": f"foto actualizados"})
 
-        # return render(request,"editar_perfil.html", {"mensaje": f"Contraseñas no coninciden"} )
 
     else:
 
@@ -426,3 +436,36 @@ def changeAvatar(request):
     
     return render(request, "avatarUL.html", {"form1": form1})
 
+
+
+##############################TIENDA##############################
+
+@login_required
+def store(request):
+    
+    
+    productos = Producto.objects.all()
+
+    return render(request, "store.html", {"productos":productos})
+
+
+##############################CONFI##############################
+
+
+def confi(request):
+
+
+    return render(request, "confi.html")
+
+
+
+def placeholder(request):
+
+     
+    return render(request, "inicio.html", {"mensaje_no_pagina": f"NO HAY PAGINA AUN"})
+
+
+def more_info(request):
+
+
+    return render(request,"more_info.html")

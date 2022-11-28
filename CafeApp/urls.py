@@ -15,17 +15,30 @@ Including another URLconf
 """
 
 from .views import (register,loginView, editar_trabajador, editar_prducto, 
- eliminar_trabajador, eliminar_order, eliminar_producto, TrabajadoresForm, buscar_order, 
- buscar_producto, buscar_trabajador, busqueda_order, busqueda_producto, busqueda_trabajador, ordenarForm, 
- form_productos, inicio, lista_order, lista_producto, lista_trabajadores, editar_perfil, ProductosDetail, changeAvatar, store)
+ eliminar_trabajador, eliminar_order, eliminar_producto, TrabajadoresForm,
+ buscar_producto, buscar_trabajador, busqueda_order, busqueda_producto, busqueda_trabajador,
+ form_productos, inicio, lista_producto, lista_trabajadores, editar_perfil, ProductosDetail, ordenarForm,lista_order,
+ changeAvatar, store, confi, list_comanda, form_comanda, eliminar_comanda, placeholder,more_info)
 
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 from django.urls import path
 
 urlpatterns = [
     path('', inicio, name="inicio"),    #incio
-    path("store",store,name="store"), #store
+    path("store/",store,name="store"), #store
+    path("confi/",confi,name="confi"), #admin
+    path("more_info/",more_info,name="more_info"), #acerca de nosotros
+
+    path("list_comanda/",list_comanda,name="list,comanda"), #comanda
+    path("form_comanda/",form_comanda,name="form_comanda"),
+    path("eliminar_comanda/<int:id>",eliminar_comanda,name="eliminar_comanda"),
+    path("placeholder/",placeholder,name="placeholder"),
+
+
+
     path('producto/', lista_producto , name = "producto"), #Lista con todos los productos
     path("ordenarFormulario/", ordenarForm, name = "ordenar"), #Hacer pedidos
     path("form_producto/", form_productos, name="form_productos"), #Agregar productos
@@ -33,7 +46,7 @@ urlpatterns = [
     path("trabajadores/",lista_trabajadores,name="trabajadores"), # Lista de los empleados
     path("TrabajadoresFormulario/",TrabajadoresForm,name="TrabajadoresFormulario"), #Agregar empleados
     path("Busqueda_order/",busqueda_order, name="busqueda_order"), #Buscar una pedido
-    path("buscar_order/",buscar_order, name="buscar_order"), 
+    # path("buscar_order/",buscar_order, name="buscar_order"), 
     path("busqueda_trabajador/",busqueda_trabajador, name="busqueda_trabajador"), #Buscar una trabajador
     path("buscar_trabajador/",buscar_trabajador, name="buscar_trabajador"),
     path("busqueda_producto/",busqueda_producto, name="busqueda_producto"), #Buscar una producto
@@ -48,22 +61,17 @@ urlpatterns = [
     path("Logout",LogoutView.as_view(template_name="logout.html"), name="Logout"),
     path("EditarPerfil",editar_perfil, name="EditarPerfil"),
     path("DetallesProductos/<pk>",ProductosDetail.as_view(), name="DetallesProductos"),
-    path("changeAvatar",changeAvatar, name="changeAvatar")
-   
-
-
-
-
-    # path("CreaProducto/",ProductoCreate.as_view(), name="CreaProducto"),
-    # path("ProductoList",ProductoList.as_view(), name="ProductoList"),
-    # path("ActualizaProductos/<pk>",ProductosUpdate.as_view(), name="ActualizaProductos"),
-    # path("EliminaProducto/<pk>",ProductosDelete.as_view(), name="EliminaProducto"),
-
-
-
+    path("changeAvatar",changeAvatar, name="changeAvatar"),
     
-    
-   
-
 
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
+
+
+
+    
+    
+   
+
+

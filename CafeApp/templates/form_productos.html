@@ -7,7 +7,7 @@
 <center>
      <h1 style="color: rgb(206, 206, 206);">   <i> <u> Agrege un Producto </u></i></h1></h1>
 
-     <form style="color: rgb(255, 255, 255);" action="{% url 'form_productos' %}" method="POST"> {% csrf_token %}
+     <form style="color: rgb(255, 255, 255);" action="{% url 'form_productos' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
        
         {{formulario_producto.as_p}}
 

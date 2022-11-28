@@ -1,7 +1,6 @@
 from django.db import models
 
 from django.contrib.auth.models import User
-
 # Create your models here.
 
 
@@ -10,12 +9,11 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=50)    
     descripcion = models.CharField(max_length=50)    
     precio  = models.IntegerField() 
-    imagen = models.ImageField(upload_to="items", null=True, blank=True)
-
+    imagen = models.ImageField(upload_to="items/",null=True, blank=True)
+    
     def __str__(self):
 
         return f"{self.nombre} - {self.precio}"
-
 
 
 class Trabajadores(models.Model):
@@ -41,6 +39,18 @@ class order(models.Model):
     def __str__(self):
 
         return f"{self.nombre_cliente} - {self.apellido_cliente} - {self.email_cliente} - {self.precio_total}"
+
+class comanda(models.Model):
+
+    nombre_cliente = models.CharField(max_length=50)    
+    mesa = models.IntegerField()
+    items_cliente = models.CharField(max_length=100)
+    precio_total = models.IntegerField()
+
+    def __str__(self):
+
+        return f"{self.nombre_cliente} - {self.items_cliente} - {self.precio_total}"
+
 
 
 class Avatar(models.Model):

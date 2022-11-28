@@ -11,6 +11,24 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
+body{
+  font-family: 'Courgette', cursive;
+font-family: 'Dancing Script', cursive;
+font-family: 'Great Vibes', cursive;
+}
+
+title{
+  font-family: 'Courgette', cursive;
+font-family: 'Dancing Script', cursive;
+font-family: 'Great Vibes', cursive;
+}
+
+h1{
+  font-family: 'Courgette', cursive;
+font-family: 'Dancing Script', cursive;
+font-family: 'Great Vibes', cursive;
+}
+
 .box-elemnt{
 
 box-shadow: rgb(222, 214, 214) 0 0 16px;
@@ -23,7 +41,11 @@ padding: 10px;
   border-radius: 0 0 4px 4px;
 }
 
+/* font-family: 'Great Vibes', cursive; */
 
+.greatvibes{
+  font-family: 'Great Vibes', Arial, Helvetica;
+}
 
 
 

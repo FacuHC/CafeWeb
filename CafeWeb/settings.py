@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'CafeApp',
+    
+   
 ]
 
 MIDDLEWARE = [
@@ -68,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Cart.context_processor.total_carrito',
+                'Cart.context_processor.total_total'
             ],
         },
     },
@@ -137,3 +141,19 @@ LOGIN_URL = "Login"
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+STATICFIELDS_DIRS = (
+    os.path.join(BASE_DIR, "static")
+)
+
+
+
+
+# EMAIL CONFIG
+
+EMAIL_HOSTS = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sariox24@gmail.com'
+EMAIL_HOST_PASSWORD = "010902Facu."
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

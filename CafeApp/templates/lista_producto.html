@@ -13,23 +13,47 @@
         {% for Producto in lista_productos %}
         <a href="{% url 'DetallesProductos' Producto.id%}">
 
-        <table>{{Producto.nombre}} - {{Producto.descripcion}} - ${{Producto.precio}} -
+        <tr>{{Producto.nombre}} - {{Producto.descripcion}} - ${{Producto.precio}} 
          <form style="color: rgb(232, 230, 230);"  action="{% url 'eliminar_producto' Producto.id %}" method="POST"> {% csrf_token %}
 
+            
+
+
+            {% if request.user.is_superuser %}
+                            
             <button> Eliminar </button>
-        </table>  
+            {% endif %}
+        </tr>  
+
 
          </form>
 
-         <button>
-            <a href="{% url 'editar_prducto' Producto.id %}" > Editar</a>
-        </button>
+            
+            {% if request.user.is_superuser  %}
+                
+            
+            <button>
+                <a href="{% url 'editar_prducto' Producto.id %}" > Editar</a>
+            </button>
+            {% endif %}
         <div>
       
-        
+           
+
 
     {% endfor %}
-     </ul>
+    
+
+
+</ul>
     </center>
+<center>
+            <img src="{% static 'imagenes/Flat-White.png'%}" width="300" height="300" alt="" >
+            <img src="{% static 'imagenes/espresso.jpg'%}" alt="" width="300" height="300" >
+            <img src="{% static 'imagenes/rissteto.jpg'%}" alt=""  width="300" height="300">
+            <img src="{% static 'imagenes/capucchinoayy.webp'%}" alt=""  width="300" height="300">
+
+      </center>
+
 {% endblock contenidoQueCambia %}
 
